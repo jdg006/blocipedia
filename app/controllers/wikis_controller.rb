@@ -1,4 +1,7 @@
 class WikisController < ApplicationController
+  
+   before_action :authorize_user
+  
   def index
      @wikis = Wiki.all
   end
@@ -61,5 +64,12 @@ class WikisController < ApplicationController
    
    def post_params
      params.require(:wiki).permit(:title, :body)
+   end
+   
+   def authorize_user
+     unless current_user.standard?
+       flash[:alert] = "You must be standard to do that."
+       redirect_to wikis_path
+     end
    end
 end
