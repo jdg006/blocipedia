@@ -7,6 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <nav>
+    <%= link_to 'Public Wikis', wikis_path %>    
+    </nav>
 
 <%= yield %>
 <% if user_signed_in? %>
