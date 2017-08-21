@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   
-   before_action :authorize_user
+   ##before_action :authorize_user
   
   def index
      @wikis = Wiki.all

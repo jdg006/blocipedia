@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   before_save { self.role ||= :standard }
-  after_initialize self.role = :standard
+  
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
