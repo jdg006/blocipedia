@@ -3,7 +3,7 @@
 <div>
 
 <ul>
-<li><%= @wiki.body %></li>
+<li><%= markdown(@wiki.body) %></li>
 </ul>
 
 <%= link_to 'Edit Wiki', edit_wiki_path%>
