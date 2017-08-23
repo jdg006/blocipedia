@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :require_sign_in, except: [:show, :index]
-  before_action :authorize_user, except: [:show, :index]
+  before_action :authorize_user, except: [:show, :index, :edit, :update]
   
   def index
      @wikis = Wiki.all
@@ -23,10 +23,10 @@ class WikisController < ApplicationController
      @wiki.assign_attributes(post_params)
  
      if @wiki.save
-       flash[:notice] = "Post was updated."
+       flash[:notice] = "Wiki was updated."
        redirect_to [@wiki]
      else
-       flash.now[:alert] = "There was an error saving the post. Please try again."
+       flash.now[:alert] = "There was an error saving the wiki. Please try again."
        render :edit
      end
    end
@@ -39,10 +39,10 @@ class WikisController < ApplicationController
      @wiki.user = current_user
 
      if @wiki.save
-       flash[:notice] = "Post was saved."
+       flash[:notice] = "Wiki was saved."
        redirect_to @wiki
      else
-       flash.now[:alert] = "There was an error saving the post. Please try again."
+       flash.now[:alert] = "There was an error saving the Wiki. Please try again."
        render :new
      end
    end
@@ -62,12 +62,12 @@ class WikisController < ApplicationController
    private
    
    def post_params
-     params.require(:wiki).permit(:title, :body)
+     params.require(:wiki).permit(:title, :body, :private)
    end
    
    def authorize_user
-     unless current_user.standard? || current_user.role == 'premium'
-       flash[:alert] = "You must be standard to do that."
+     unless current_user.premium? || current_user.role == 'admin'
+       flash[:alert] = "You must be premium to do that."
        redirect_to wikis_path
      end
    end

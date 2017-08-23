@@ -5,8 +5,10 @@
 <% if wiki.private == false%>
 <li><%= link_to wiki.title, wiki %></li>
 <% end %>
+<% if current_user%>
 <% if current_user.role == 'premium' && wiki.private == true %>
 <li><%= link_to wiki.title, wiki %></li>
+<% end %>
 <% end %>
 </ul>
 <% end %>
