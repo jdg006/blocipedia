@@ -5,10 +5,9 @@ class WikisController < ApplicationController
   def index
      @wikis = Wiki.all
   end
-
+  
   def show
     @wiki = Wiki.find(params[:id])
-   
   end
 
   def new
@@ -36,7 +35,7 @@ class WikisController < ApplicationController
   @wiki = Wiki.new
      @wiki.title = params[:wiki][:title]
      @wiki.body = params[:wiki][:body]
-     @wiki.private = false
+     @wiki.private = params[:wiki][:private]
      @wiki.user = current_user
 
      if @wiki.save
@@ -67,7 +66,7 @@ class WikisController < ApplicationController
    end
    
    def authorize_user
-     unless current_user.standard?
+     unless current_user.standard? || current_user.role == 'premium'
        flash[:alert] = "You must be standard to do that."
        redirect_to wikis_path
      end

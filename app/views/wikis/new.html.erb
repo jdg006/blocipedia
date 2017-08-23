@@ -5,5 +5,12 @@
    <%= f.label :body %>
    <%= f.text_area :body %>
    
+   <% if current_user.role == 'premium'%>
+   
+   <%= f.label :private%>
+   <%= f.check_box :private %>
+   <% end %>
+   
    <%= f.submit "Save" %>
+
  <% end %>

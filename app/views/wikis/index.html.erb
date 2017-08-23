@@ -1,8 +1,13 @@
-<h1>Public Wikis</h1>
+<h1>Wikis</h1>
 <div>
 <% @wikis.each do |wiki|%>
 <ul>
+<% if wiki.private == false%>
 <li><%= link_to wiki.title, wiki %></li>
+<% end %>
+<% if current_user.role == 'premium' && wiki.private == true %>
+<li><%= link_to wiki.title, wiki %></li>
+<% end %>
 </ul>
 <% end %>
 <%= link_to 'New Wiki', new_wiki_path%>
