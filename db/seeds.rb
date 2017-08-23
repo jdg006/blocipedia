@@ -17,9 +17,19 @@ require 'faker'
         title: Faker::LordOfTheRings.location,
         body: Faker::ChuckNorris.fact,
         private: Faker::Boolean.boolean,
-        user: users.sample
+        
          )
-     end
+  end
+  
+  wikis = Wiki.all
+  
+  10.times do
+      Collaborator.create!(
+          user: users.sample,
+          wiki: wikis.sample
+          )
+  end
  
  puts "#{User.count} users created"
  puts "#{Wiki.count} Wikis created"
+ puts "#{Collaborator.count} Collaborators created"

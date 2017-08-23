@@ -20,7 +20,7 @@ class WikisController < ApplicationController
   
   def update
      @wiki = Wiki.find(params[:id])
-     @wiki.assign_attributes(post_params)
+     @wiki.assign_attributes(wiki_params)
  
      if @wiki.save
        flash[:notice] = "Wiki was updated."
@@ -61,7 +61,7 @@ class WikisController < ApplicationController
    
    private
    
-   def post_params
+   def wiki_params
      params.require(:wiki).permit(:title, :body, :private)
    end
    
