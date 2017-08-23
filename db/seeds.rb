@@ -12,7 +12,7 @@ require 'faker'
  end
  users = User.all
  
- 10.times do
+ 30.times do
      Wiki.create!(
         title: Faker::LordOfTheRings.location,
         body: Faker::ChuckNorris.fact,
@@ -22,4 +22,4 @@ require 'faker'
      end
  
  puts "#{User.count} users created"
- puts "#{Wiki.count} Wikis created "
+ puts "#{Wiki.count} Wikis created"
