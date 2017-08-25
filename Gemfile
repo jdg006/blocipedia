@@ -60,5 +60,7 @@ group :development do
  gem 'figaro', '1.0'
  
  gem 'redcarpet', '~> 3.0.0'
+ 
+ gem 'pundit'
 end
 

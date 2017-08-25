@@ -1,16 +1,45 @@
-<h1>Wikis</h1>
-<div>
-<% @wikis.each do |wiki|%>
-<ul>
-<% if wiki.private == false%>
-<li><%= link_to wiki.title, wiki %></li>
-<% end %>
-<% if current_user%>
-<% if current_user.role == 'premium' && wiki.private == true %>
-<li><%= link_to wiki.title, wiki %></li>
-<% end %>
-<% end %>
-</ul>
-<% end %>
-<%= link_to 'New Wiki', new_wiki_path%>
+<h2>Wikis</h2>
+
+<div class= "row">
+    <div class= "col-md-6">
+        <div class= "new-wiki-btn">
+            <%= link_to 'New Wiki', new_wiki_path, class: 'btn btn-primary' %>
+        </div>
+        <h4>Viewable Wikis:</h4>
+        <% @wikis.each do |wiki|%>
+            <% if current_user && current_user.role == 'premium'%>
+                <ul>
+                    <li><%= link_to wiki.title, wiki %></li>
+                </ul>
+            <% elsif current_user && current_user.role == 'standard' && wiki.private == false %>
+                <ul>
+                    <li><%= link_to wiki.title, wiki %></li>
+                </ul>
+            <% elsif wiki.private == false %>
+                <ul>
+                    <li><%= link_to wiki.title, wiki %></li>
+                </ul>
+            <% end %>
+        <% end%>
+    </div>
+    <div class= "col-md-6">
+        <h4>You are a collaborator on the following Wikis:</h4>
+        <% @wikis.each do |wiki|%>
+         <% wiki.collaborators.each do |col|%>
+         <% if col.user == current_user%>
+             <ul>
+                <li><%= link_to wiki.title, wiki %></li>
+             </ul>
+            <% end %>
+        <% end %>
+        <% end %>
+        
+    </div>    
 </div>
+
+
+
+
+
+
+

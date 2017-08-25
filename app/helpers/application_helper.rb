@@ -20,4 +20,12 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+  
+  def current_user?
+    if current_user
+      true
+    else
+      false
+    end
+  end
 end

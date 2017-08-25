@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :require_sign_in, except: [:show, :index]
-  before_action :authorize_user, except: [:show, :index, :edit, :update]
+ # before_action :authorize_user, except: [:show, :index, :edit, :update]
   
   def index
      @wikis = Wiki.all
@@ -32,7 +32,7 @@ class WikisController < ApplicationController
    end
   
   def create
-  @wiki = Wiki.new
+     @wiki = Wiki.new
      @wiki.title = params[:wiki][:title]
      @wiki.body = params[:wiki][:body]
      @wiki.private = params[:wiki][:private]
@@ -66,7 +66,7 @@ class WikisController < ApplicationController
    end
    
    def authorize_user
-     unless current_user.premium? || current_user.role == 'admin'
+     unless current_user.premium? || current_user.role == 'admin' 
        flash[:alert] = "You must be premium to do that."
        redirect_to wikis_path
      end

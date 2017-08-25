@@ -1,0 +1,17 @@
+<h2>Add Collaboarator<h2>
+
+<%= form_for @collaborator do |f| %>
+   <%= f.label :wiki %>
+   <%= f.select :wiki, options_for_select(current_user.wikis.map{|i|i.title}) %>
+ 
+   
+   <%= f.label :user%>
+   <%= f.select :user, options_for_select(User.all.map{|i|i.email}, params[:user]) %>
+   
+   
+   <%= f.submit "Save" %>
+   
+   
+
+ <% end %>
+

@@ -1,12 +1,14 @@
-<h1>Welcome To Blocipedia</h1>
-<div>
-    <% if user_signed_in? && current_user.role == 'standard'%>
-    <%= link_to 'Upgrade To Premium', new_charge_path %>
-    <%elsif user_signed_in? && current_user.role == 'premium' %>
-    <%= link_to "Downgrade To Standard", welcome_downgrade_path, method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to downgrade? All of your wikis will become public.' } %>
-    <% end %>
+<div class="row">
+  <div class="col-md-12">
+    <h1 class= "title">Welcome To Blocipedia</h1>
+  </div>
 </div>
-<div>
+
+<div class= "row">
+    <div class= "col-md-9">
+    <% if current_user%>
+    <h3>User's Wikis</h3>
+    <% end %>
     <% if current_user %>
     <%  current_user.wikis.each do |wiki| %>
     <ul>
@@ -14,5 +16,13 @@
     </ul>
     <% end %>
     <% end %>
+    </div>
+    <div class= "col-md-3">
+        <% if user_signed_in? && current_user.role == 'standard'%>
+    <%= link_to 'Upgrade To Premium', new_charge_path, class: 'btn btn-success' %>
+    <%elsif user_signed_in? && current_user.role == 'premium' %>
+    <%= link_to "Downgrade To Standard", welcome_downgrade_path, method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to downgrade? All of your wikis will become public.' } %>
+    <% end %>
+    <div>
 </div>
 

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   devise_for :users
   
+  resources :collaborators
+  
   post 'welcome/downgrade'
   
   get 'welcome/index'

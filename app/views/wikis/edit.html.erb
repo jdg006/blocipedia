@@ -1,21 +1,47 @@
 <h1>Edit Wiki</h1>
  
- <%= form_for @wiki do |f| %>
-   <%= f.label :title %>
-   <%= f.text_field :title %>
- 
-   <%= f.label :body %>
-   <%= f.text_area :body %>
-   
-   <% if current_user.role == 'premium'%>
-   
-   <%= f.label :private %>
-   <%= f.check_box :private %>
-   
-   <%= f.label :collaborator %>
-   <%= f.text_field :collaborator %>
+ <div class="row">
+   <div class= "new-wiki-container">
+      <div class="col-md-8">
+         <%= form_for @wiki do |f| %>
+            <%= f.label :title %>
+            <%= f.text_field :title, class: 'form-control' %>
+            <%= f.label :body %>
+            <%= f.text_area :body, rows: 8, class: 'form-control' %>
+            <% if current_user.role == 'premium'%>
+            <%= f.label :private%>
+            <%= f.check_box :private, class: 'form-control' %>
+            <% end %>
+         <%= f.submit "Save" %>
+       <% end %>
+      </div>
+    <div class= "col-md-4">
+     <% if current_user.role == "premium" %>
+ <div>
+   <% if @wiki.collaborators.count > 0 %>
+   <h4>Remove collaborator by clicking one below:</h4>
    <% end %>
-   
-   <%= f.submit "Save" %>
-
+   <% @wiki.collaborators.each do |col|%>
+   <p><%= link_to col.user.email, collaborator_path(col), data: { confirm: 'Are you sure you want to remove this collaborator?' }, :method => :delete %></p>
+   <% end %>
+   <%= render 'collaborators/form', collaborator: Collaborator.new %>
+ </div>
  <% end %>
+    </div>
+   </div>
+ </div>
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 

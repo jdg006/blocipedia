@@ -7,7 +7,7 @@ class CollaboratorsController < ApplicationController
     @collaborator = Collaborator.find(params[:id])
   end
 
-  def new
+  def new 
     @collaborator = Collaborator.new
   end
 
@@ -29,13 +29,27 @@ class CollaboratorsController < ApplicationController
    end
   
   def create
-  @collaborator = Collaborator.new
-     @collaborator.user = params[:collaborator][:user]
-     @collaborator.body = params[:collaborator][:wiki]
-
+     collaborator_email = params[:collaborator][:user]
+     collaborator_wiki = params[:collaborator][:wiki]
+     @wiki = Wiki.where(id: collaborator_wiki).take
+    
+     @wiki.collaborators.each do |col|
+           if col.user.email == collaborator_email
+             flash[:notice]= "That person is already a collaborator"
+            redirect_to edit_wiki_path(@wiki)
+            return
+            end
+        end
+        
+    
+    
+     @collaborator = Collaborator.new
+     @collaborator.user = User.where(email: collaborator_email).take
+     @collaborator.wiki = @wiki
+    
      if @collaborator.save
-       flash[:notice] = "Collaborator was saved."
-       redirect_to @wiki
+         flash[:notice] = "\"#{@collaborator.user.email}\" was added successfully."
+       redirect_to edit_wiki_path(@collaborator.wiki)
      else
        flash.now[:alert] = "There was an error saving the Wiki. Please try again."
        render :new
@@ -44,10 +58,10 @@ class CollaboratorsController < ApplicationController
    
    def destroy
      @collaborator = Collaborator.find(params[:id])
- 
+     @wiki = @collaborator.wiki
      if @collaborator.destroy
-       flash[:notice] = "\"#{@collaborator.title}\" was deleted successfully."
-       redirect_to @collaborator
+       flash[:notice] = "\"#{@collaborator.user.email}\" was deleted successfully."
+       redirect_to edit_wiki_path(@wiki)
      else
        flash.now[:alert] = "There was an error deleting the collaborator."
        render :show
@@ -66,4 +80,6 @@ class CollaboratorsController < ApplicationController
        redirect_to wikis_path
      end
    end
+   
+   
 end

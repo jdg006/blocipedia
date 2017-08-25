@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   before_save { self.role ||= :standard }
-  has_many :collaborators
-  has_many :wikis, through: :collaborators
+  
+  has_many :wikis
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -1,0 +1,10 @@
+ <h4>Add a collaborator:</h4>
+ 
+ <%= form_for collaborator do |f| %>
+ 
+   <%= f.hidden_field :wiki, :value => @wiki.id %>
+   <%= f.label :user %>
+   
+   <%= f.select :user, options_for_select(User.all.map{|i|i.email}, params[:user]) %>
+   <%= f.submit "Save" %>
+ <% end %>

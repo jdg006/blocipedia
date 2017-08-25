@@ -13,4 +13,12 @@ class ApplicationController < ActionController::Base
        redirect_to new_user_session_path
      end
    end
+   
+   def authorized_for_private_wiki_index
+       if current_user && admin
+           elsif current_user && premium
+   end
+   
+   
+  end
 end
